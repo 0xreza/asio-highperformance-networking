@@ -1,0 +1,45 @@
+// Some engineers at Google have come to the conclusion that using "required"
+// does more harm than good; they prefer to use only "optional" and "repeated".
+// However, this view is not universal. TODO
+// Source: https://developers.google.com/protocol-buffers/docs/cpptutorial
+
+syntax = "proto2";
+
+package asiohpn;
+
+enum RequestType {
+  m_req = 1;
+  m_rsp = 2;
+}
+
+message RequestHeaderProto {
+  required uint32 sender_id = 1;
+  required uint64 request_id = 2;
+}
+
+message RequestProto {
+  required RequestHeaderProto header = 1;
+  required uint64 timestamp = 2;
+  optional bytes payload = 3;
+}
+
+message ResponseHeaderProto {
+  required uint32 sender_id = 1;
+  required uint64 request_id = 2;
+  required uint32 status = 3;
+  optional bytes message = 4;
+}
+
+message ResponseProto {
+  required ResponseHeaderProto header = 1;
+  optional string payload = 3;
+}
+
+message RequestBatchProto {
+  repeated RequestProto requests=1;
+}
+
+message ResponseBatchProto {
+  repeated ResponseProto responses=1;
+}
+
